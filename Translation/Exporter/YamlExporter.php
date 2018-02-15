@@ -33,7 +33,6 @@ class YamlExporter implements ExporterInterface
         }
 
         $ymlDumper = new Dumper();
-        $ymlDumper->setIndentation(2);
         $ymlContent = $ymlDumper->dump($translations, 10);
 
         $bytes = file_put_contents($file, $ymlContent);
