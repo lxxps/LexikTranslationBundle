@@ -103,7 +103,8 @@ class LexikTranslationExtension extends Extension
 
         $translator->setArguments($arguments);
         $translator->addMethodCall('setConfigCacheFactory', [new Reference('config_cache_factory')]);
-
+        $translator->setPublic(true);
+        
         $container->setDefinition('lexik_translation.translator', $translator);
     }
 
