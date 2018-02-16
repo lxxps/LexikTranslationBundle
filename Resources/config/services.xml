@@ -55,6 +55,16 @@
     </parameters>
 
     <services>
+               
+        <!-- Console -->    
+        <service id="lexik\bundle\translationbundle\command\importtranslationscommand">
+            <tag name="console.command" command="lexik:translations:import"/>
+        </service>
+
+        <service id="lexik\bundle\translationbundle\command\exporttranslationscommand">
+            <tag name="console.command" command="lexik:translations:export"/>
+        </service>
+               
         <!-- Loader -->
         <service id="lexik_translation.loader.database" class="%lexik_translation.loader.database.class%">
             <argument type="service" id="lexik_translation.translation_storage" />
