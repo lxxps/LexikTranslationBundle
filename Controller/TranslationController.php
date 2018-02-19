@@ -5,7 +5,11 @@ namespace Lexik\Bundle\TranslationBundle\Controller;
 use Lexik\Bundle\TranslationBundle\Form\Type\TransUnitType;
 use Lexik\Bundle\TranslationBundle\Storage\StorageInterface;
 use Lexik\Bundle\TranslationBundle\Util\Csrf\CsrfCheckerTrait;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -117,4 +121,61 @@ class TranslationController extends Controller
     {
         return $this->get('lexik_translation.locale.manager')->getLocales();
     }
+    
+    /**
+     * Export traduction table content to traduction files
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function exportAction(Request $request)
+    {
+        $kernel = $this->get('kernel');
+        $application = new Application($kernel);
+        $application->setAutoExit(false);
+    
+        $input = new ArrayInput(array(
+            'command' => 'lexik:translations:export',
+            // (optional) define the value of command arguments
+//            'fooArgument' => 'barValue',
+            // (optional) pass options to the command
+//            '--message-limit' => $messages,
+        ));
+    
+//        // You can use NullOutput() if you don't need the output
+//        $output = new BufferedOutput();
+//        $application->run($input, $output);
+//
+//        // return the output, don't use if you used NullOutput()
+//        $content = $output->fetch();
+//
+//        // return new Response(""), if you used NullOutput()
+//        return new Response($content);
+    
+        $output = new NullOutput();
+        $application->run($input, $output);
+    
+        return new JsonResponse("OK");
+    }
+    
+    /**
+     * Import traduction files content to traduction table
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function importAction(Request $request)
+    {
+        $kernel = $this->get('kernel');
+        $application = new Application($kernel);
+        $application->setAutoExit(false);
+    
+        $input = new ArrayInput(array(
+            'command' => 'lexik:translations:import',
+        ));
+
+        $output = new NullOutput();
+        $application->run($input, $output);
+    
+        return new JsonResponse("OK");
+    }
+    
 }
