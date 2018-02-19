@@ -17,3 +17,8 @@ lexik_translation_invalidate_cache:
     path:     /invalidate-cache
     defaults: { _controller: "LexikTranslationBundle:Translation:invalidateCache" }
     methods:  [GET]
+
+lexik_translation_export:
+    path:     /export
+    defaults: { _controller: "LexikTranslationBundle:Translation:export" }
+    methods:  [GET]
