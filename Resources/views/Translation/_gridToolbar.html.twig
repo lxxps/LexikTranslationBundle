@@ -10,6 +10,51 @@
                 <span class="glyphicon glyphicon-tasks"></span>
                 {{ 'overview.page_title'|trans({}, 'LexikTranslationBundle') }}
             </a>
+            <a href="#" role="button" class="btn btn-primary ajax-export">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                {{ 'translations.export'|trans({}, 'LexikTranslationBundle') }}
+            </a>
+
+            <script>
+                $(document).on('click', 'a.ajax-export', function(){
+                    that = $(this);
+                    initial = that.html();
+
+                    that.addClass('btn-warning').removeClass('btn-primary');
+                    that.html('<span class="glyphicon glyphicon-flash"></span> Exporting...');
+
+                    $.ajax({
+                        url:'{{ (path('lexik_translation_export')) }}',
+                        type: "get",
+                        dataType: "json",
+                        data: {
+                            "some_var_name": "some_var_value"
+                        },
+                        async: true,
+                        success: function (data)
+                        {
+                            that.addClass('btn-success').removeClass('btn-warning');
+                            that.html('<span class="glyphicon glyphicon-ok"></span> Export Successfull');
+
+                            setTimeout(function() {
+                                that.addClass('btn-primary').removeClass('btn-success');
+                                that.html(initial);
+                            }, 2000);
+                        },
+                        error: function (data)
+                        {
+                            that.addClass('btn-error').removeClass('btn-warning');
+                            that.html('<span class="glyphicon glyphicon-remove"></span> Export failed');
+
+                            setTimeout(function() {
+                                that.addClass('btn-primary').removeClass('btn-success');
+                                that.html(initial);
+                            }, 2000);
+                        }
+                    });
+                    return false;
+                });
+            </script>
         </div>
     </h1>
 </div>
