@@ -2,6 +2,10 @@
     <h1>
         {{ 'translations.page_title'|trans({}, 'LexikTranslationBundle') }}
         <div class="pull-right">
+            <a href="#" role="button" class="btn btn-primary ajax-import">
+                <span class="glyphicon glyphicon-open-file"></span>
+                {{ 'translations.import'|trans({}, 'LexikTranslationBundle') }}
+            </a>
             <a href="{{ path('lexik_translation_new') }}" role="button" class="btn btn-success">
                 <span class="glyphicon glyphicon-plus"></span>
                 {{ 'translations.new_translation'|trans({}, 'LexikTranslationBundle') }}
@@ -11,11 +15,51 @@
                 {{ 'overview.page_title'|trans({}, 'LexikTranslationBundle') }}
             </a>
             <a href="#" role="button" class="btn btn-primary ajax-export">
-                <span class="glyphicon glyphicon-download-alt"></span>
+                <span class="glyphicon glyphicon-save-file"></span>
                 {{ 'translations.export'|trans({}, 'LexikTranslationBundle') }}
             </a>
 
             <script>
+                $(document).on('click', 'a.ajax-import', function(){
+                    that = $(this);
+                    initial = that.html();
+
+                    that.addClass('btn-warning').removeClass('btn-primary');
+                    that.html('<span class="glyphicon glyphicon-flash"></span> Importing...');
+
+                    $.ajax({
+                        url:'{{ (path('lexik_translation_import')) }}',
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            "some_var_name": "some_var_value"
+                        },
+                        async: true,
+                        success: function (data)
+                        {
+                            that.addClass('btn-success').removeClass('btn-warning');
+                            that.html('<span class="glyphicon glyphicon-ok"></span> Import Successfull');
+
+                            setTimeout(function() {
+                                that.addClass('btn-primary').removeClass('btn-success');
+                                that.html(initial);
+                                location.reload(); //todo reload table only
+                            }, 2000);
+                        },
+                        error: function (data)
+                        {
+                            that.addClass('btn-error').removeClass('btn-warning');
+                            that.html('<span class="glyphicon glyphicon-remove"></span> Import failed');
+
+                            setTimeout(function() {
+                                that.addClass('btn-primary').removeClass('btn-success');
+                                that.html(initial);
+                            }, 2000);
+                        }
+                    });
+                    return false;
+                });
+
                 $(document).on('click', 'a.ajax-export', function(){
                     that = $(this);
                     initial = that.html();
