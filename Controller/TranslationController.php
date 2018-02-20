@@ -170,6 +170,7 @@ class TranslationController extends Controller
     
         $input = new ArrayInput(array(
             'command' => 'lexik:translations:import',
+            //'--force' => true,
         ));
 
         $output = new NullOutput();
