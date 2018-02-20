@@ -22,3 +22,8 @@ lexik_translation_export:
     path:     /export
     defaults: { _controller: "LexikTranslationBundle:Translation:export" }
     methods:  [GET]
+
+lexik_translation_import:
+    path:     /import
+    defaults: { _controller: "LexikTranslationBundle:Translation:import" }
+    methods:  [POST]
