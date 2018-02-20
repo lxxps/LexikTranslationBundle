@@ -24,6 +24,8 @@ translations:
     data_source:         "Source de données"
     latest_profiles:     "Derniers profils"
     profile:             "Profil"
+    import:              "Import"
+    export:              "Export"
 
 overview:
     page_title: "Aperçu"
