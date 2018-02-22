@@ -71,7 +71,7 @@ class ImportTranslationsCommand extends ContainerAwareCommand
         if ($bundleName) {
             $bundle = $this->getApplication()->getKernel()->getBundle($bundleName);
 
-            if (null !== $bundle->getParent()) {
+            if ( method_exists( $bundle , 'getParent' ) && ( null !== $bundle->getParent() )) {
                 // due to symfony's bundle inheritance if a bundle has a parent it is fetched first.
                 // so we tell getBundle to NOT fetch the first if a parent is present
                 $bundles = $this->getApplication()->getKernel()->getBundle($bundle->getParent(), false);
