@@ -8,7 +8,7 @@ This Symfony bundle allows you to:
 * have an overview to check translation domains are completely translated.
 * add new translations in the database.
 
-[![Build Status](https://travis-ci.org/lexik/LexikTranslationBundle.png?branch=master)](https://travis-ci.org/jlemale/LexikTranslationBundle)
+[![Build Status](https://travis-ci.org/jlemale/LexikTranslationBundle.png?branch=master)](https://travis-ci.org/jlemale/LexikTranslationBundle)
 
 The idea is to:
 
