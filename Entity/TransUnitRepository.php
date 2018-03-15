@@ -100,7 +100,7 @@ class TransUnitRepository extends EntityRepository
             $transUnits = $qb->select('tu, te')
                 ->leftJoin('tu.translations', 'te')
                 ->andWhere($qb->expr()->in('tu.id', $ids))
-                ->andWhere($qb->expr()->in('te.locale', $locales))
+                ->andWhere('te.id IS NULL OR ( '.$qb->expr()->in('te.locale', $locales).' )')
                 ->orderBy(sprintf('tu.%s', $sortColumn), $order)
                 ->getQuery()
                 ->getArrayResult();
@@ -205,7 +205,7 @@ class TransUnitRepository extends EntityRepository
             $qb = $this->createQueryBuilder('tu');
             $qb->select('DISTINCT tu.id')
                 ->leftJoin('tu.translations', 't')
-                ->where($qb->expr()->in('t.locale', $locales));
+                ->where('t.id IS NULL OR ( '.$qb->expr()->in('t.locale', $locales).' )' );
 
             foreach ($locales as $locale) {
                 if (!empty($filters[$locale])) {
