@@ -182,28 +182,24 @@ class ImportTranslationsCommand extends ContainerAwareCommand
      */
     protected function importAppTranslationFiles(array $locales, array $domains)
     {
-        // framework-bundle is required, so look for translator.paths config
-        $translator = $this->getContainer()->get('lexik_translation.translator');
+//        // framework-bundle is required, so look for translator.paths config
+//        $translator = $this->getContainer()->get('lexik_translation.translator');
+//        
+//        $dirs = [];
+//        
+//        foreach( $locales as $locale ) {
+//            $catalogue = $translator->getCatalogue( $locale );
+//            foreach( $catalogue->getResources() as $resource ) {
+//                $dirs[] = dirname( $resource->getResource() );
+//            }
+//        }
+//        
+//        foreach( array_unique( $dirs ) as $dir )
+//        {
+//            $finder = $this->findTranslationsFiles( $dir , $locales, $domains, false);
+//            $this->importTranslationFiles($finder);
+//        }
         
-        $dirs = [];
-        
-        foreach( $locales as $locale )
-        {
-            $catalogue = $translator->getCatalogue( $locale );
-            
-            foreach( $catalogue->getResources() as $resource )
-            {
-                $dirs[] = dirname( $resource->getResource() );
-            }
-        }
-        
-        foreach( array_unique( $dirs ) as $dir )
-        {
-            $finder = $this->findTranslationsFiles( $dir , $locales, $domains, false);
-            $this->importTranslationFiles($finder);
-        }
-        
-        // old fashion
         $finder = $this->findTranslationsFiles($this->getApplication()->getKernel()->getProjectDir() . '/translations', $locales, $domains, false);
         $this->importTranslationFiles($finder);
     }
@@ -236,6 +232,9 @@ class ImportTranslationsCommand extends ContainerAwareCommand
     {
         $path = $bundle->getPath();
         if ($global) {
+//            // new school
+//            $this->importAppTranslationFiles( $locales , [$bundle->getName()] );
+            
             $path = $this->getApplication()->getKernel()->getRootDir() . '/Resources/' . $bundle->getName() . '/translations';
             $this->output->writeln('<info>*** Importing ' . $bundle->getName() . '`s translation files from ' . $path . ' ***</info>');
         }
