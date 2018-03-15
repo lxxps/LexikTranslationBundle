@@ -132,7 +132,7 @@ app.factory('tableParamsManager', ['ngTableParams', 'translationApiManager', '$l
             ];
 
             for (var key in locales) {
-                var columnDef = { title: locales[key].toUpperCase(), index: locales[key], edit: true, delete: true, filter: {}, sortable: false, visible: true };
+                var columnDef = { title: labels[locales[key]] ? labels[locales[key]] : locales[key].toUpperCase(), index: locales[key], edit: true, delete: true, filter: {}, sortable: false, visible: true };
                 columnDef['filter'][locales[key]] = 'text';
 
                 this.columns.push(columnDef);
